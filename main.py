@@ -12,6 +12,9 @@ from sklearn.metrics import confusion_matrix
 
 # file_path_and_name = 'Iris.csv'
 # response_column_label = 'Species'
+
+# file_path_and_name = 'miniTennis.csv'
+# response_column_label = 'Species'
 #
 file_path_and_name = 'Titanic.csv'
 response_column_label = 'Survived'

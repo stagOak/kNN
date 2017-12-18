@@ -4,7 +4,7 @@ class KNNClassifier(object):
                  response_column_label):
         import pandas as pd
         import numpy as np
-        print('instantiate knn classifier object')
+        # print('instantiate knn classifier object')
         self.id = id
         self._df_train = pd.DataFrame()
         self._df_test = pd.DataFrame()
@@ -24,7 +24,7 @@ class KNNClassifier(object):
         self._X_train_encode = np.array([])
 
     def fit(self, df):
-        print('inside .fit()')
+        # print('inside .fit()')
         self._df_train = df
         if self._response_type == 'category' and self._feature_types == 'category':
             self._fit_cat_resp_cat_feat()
@@ -39,7 +39,7 @@ class KNNClassifier(object):
 
     def _encode_cat_feat(self, X_train):
         import numpy as np
-        print('inside _encode_cat_feat()')
+        # print('inside _encode_cat_feat()')
         from sklearn.preprocessing import LabelEncoder
         lb_make = LabelEncoder()
         X_train_encode = np.empty((X_train.shape[0], X_train.shape[1]), dtype=float)
@@ -51,7 +51,7 @@ class KNNClassifier(object):
         return X_train, X_train_encode
 
     def _fit_cat_resp_cat_feat(self):
-        print('inside _fit_cat_resp_cat_feat()')
+        # print('inside _fit_cat_resp_cat_feat()')
         self._set_X_and_y_numpy_arrays('train')
         self._X_train, self._X_train_encode = self._encode_cat_feat(self._X_train)
 
@@ -63,7 +63,7 @@ class KNNClassifier(object):
 
     def _construct_numerical_features_distance_table(self):
         import numpy as np
-        print('inside _construct_numerical_features_distance_table()')
+        # print('inside _construct_numerical_features_distance_table()')
         n_obs = self._X_train.shape[0]
         self._distance_table = np.empty((n_obs, n_obs), dtype=float)
         self._distance_table[:] = np.nan
@@ -86,10 +86,10 @@ class KNNClassifier(object):
         return distance
 
     def _fit_cat_resp_num_feat(self):
-        print('inside _fit_cat_resp_num_feat()')
+        # print('inside _fit_cat_resp_num_feat()')
         self._set_X_and_y_numpy_arrays('train')
         self._X_train = self._scale_numerical_features(self._X_train)
-        self._construct_numerical_features_distance_table()
+        # self._construct_numerical_features_distance_table()
 
     def _set_X_and_y_numpy_arrays(self, test_or_train):
         import numpy as np
@@ -109,7 +109,7 @@ class KNNClassifier(object):
             self._y_test = y
 
     def predict(self, df):
-        print('inside predict()')
+        # print('inside predict()')
         self._df_test = df
         if self._response_type == 'category' and self._feature_types == 'category':
             self._predict_cat_resp_cat_feat()
@@ -124,7 +124,7 @@ class KNNClassifier(object):
         return self.accuracy_score, self._prediction
 
     def _predict_cat_resp_cat_feat(self):
-        print('inside _predict_cat_resp_cat_feat()')
+        # print('inside _predict_cat_resp_cat_feat()')
         # identify nearest neighbors
         # get classification
         self._set_X_and_y_numpy_arrays('test')
@@ -135,7 +135,7 @@ class KNNClassifier(object):
     def _contruct_distance_table_test_cat_feat(self):
         import numpy as np
         from sklearn.metrics import jaccard_similarity_score
-        print('inside _contruct_distance_table_test_cat_feat()')
+        # print('inside _contruct_distance_table_test_cat_feat()')
         n_obs_train = self._X_train.shape[0]
         n_obs_test = self._X_test.shape[0]
         self._distance_table_test = np.empty((n_obs_test, n_obs_train), dtype=float)
@@ -143,7 +143,7 @@ class KNNClassifier(object):
         count = 0
         for (test_row, train_col), value in np.ndenumerate(self._distance_table_test):
             count += 1
-            print(test_row, train_col)
+            # print(test_row, train_col)
             if train_col < 1:
                 test_row_obs = self._X_test_encode[test_row, :].reshape(1, self._X_test.shape[1])
             train_col_obs = self._X_train_encode[train_col, :].reshape(1, self._X_train.shape[1])
@@ -158,7 +158,7 @@ class KNNClassifier(object):
         return jacc_sim_score
 
     def _predict_cat_resp_num_feat(self):
-        print('inside _predict_cat_resp_num_feat()')
+        # print('inside _predict_cat_resp_num_feat()')
         self._set_X_and_y_numpy_arrays('test')
         self._X_test = self._scale_numerical_features(self._X_test)
         self._contruct_distance_table_test()
@@ -166,7 +166,7 @@ class KNNClassifier(object):
 
     def _make_prediction(self):
         import numpy as np
-        print('inside _make_prediction()')
+        # print('inside _make_prediction()')
         self._prediction = np.empty((self._y_test.shape[0], 1), dtype=object)
         self._prediction[:] = 'blank'
         y_train = self._y_train.reshape(1, self._y_train.shape[0])
@@ -187,7 +187,7 @@ class KNNClassifier(object):
 
     def _contruct_distance_table_test(self):
         import numpy as np
-        print('inside _contruct_distance_table_test()')
+        # print('inside _contruct_distance_table_test()')
         n_obs_train = self._X_train.shape[0]
         n_obs_test = self._X_test.shape[0]
         self._distance_table_test = np.empty((n_obs_test, n_obs_train), dtype=float)

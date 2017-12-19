@@ -10,14 +10,14 @@ from sklearn.metrics import confusion_matrix
 
 # data file options
 
-# file_path_and_name = 'Iris.csv'
-# response_column_label = 'Species'
+file_path_and_name = 'Iris.csv'
+response_column_label = 'Species'
 
 # file_path_and_name = 'miniTennis.csv'
 # response_column_label = 'Species'
 #
-file_path_and_name = 'Titanic.csv'
-response_column_label = 'Survived'
+# file_path_and_name = 'Titanic.csv'
+# response_column_label = 'Survived'
 
 # load data and determine feature type
 df = load_data(file_path_and_name, print_verbose=False)
